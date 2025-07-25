@@ -10,14 +10,14 @@ export function useProductos() {
   const currentPage = ref(1)
   const itemsPerPage = ref(10)
 
-  const fetchProductos = async (page: number = 1, paginate: number = 10) => {
+  const fetchProductos = async (page: number = 1, paginate: number = 10, filtro?: string) => {
     loading.value = true
     error.value = null
     try {
       currentPage.value = page
       itemsPerPage.value = paginate
 
-      const response = await indexManteProductosService.listadoProductos(page, paginate)
+      const response = await indexManteProductosService.listadoProductos(page, paginate, filtro)
       productos.value = response.data
       paginationData.value = {
         current_page: response.current_page,
@@ -41,26 +41,26 @@ export function useProductos() {
     }
   }
 
-  const nextPage = () => {
+  const nextPage = (filtro?: string) => {
     if (paginationData.value && currentPage.value < paginationData.value.last_page) {
-      fetchProductos(currentPage.value + 1, itemsPerPage.value)
+      fetchProductos(currentPage.value + 1, itemsPerPage.value, filtro)
     }
   }
 
-  const prevPage = () => {
+  const prevPage = (filtro?: string) => {
     if (currentPage.value > 1) {
-      fetchProductos(currentPage.value - 1, itemsPerPage.value)
+      fetchProductos(currentPage.value - 1, itemsPerPage.value, filtro)
     }
   }
 
-  const goToPage = (page: number) => {
+  const goToPage = (page: number, filtro?: string) => {
     if (paginationData.value && page >= 1 && page <= paginationData.value.last_page) {
-      fetchProductos(page, itemsPerPage.value)
+      fetchProductos(page, itemsPerPage.value, filtro)
     }
   }
 
-  const changeItemsPerPage = (newItemsPerPage: number) => {
-    fetchProductos(1, newItemsPerPage) // Volver a la primera página al cambiar items por página
+  const changeItemsPerPage = (newItemsPerPage: number, filtro?: string) => {
+    fetchProductos(1, newItemsPerPage, filtro) // Volver a la primera página al cambiar items por página
   }
 
   return {

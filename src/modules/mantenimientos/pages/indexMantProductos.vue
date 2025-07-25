@@ -16,7 +16,6 @@
               paginationData ? (paginationData.current_page - 1) * paginationData.per_page : 0
             "
             :filters="filters"
-            :loading="loading"
             scrollable
             scrollHeight="600px"
             class="w-full"
@@ -313,7 +312,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { FilterMatchMode } from '@primevue/core/api'
 import { useToast } from 'primevue/usetoast'
 import { useProductos } from '../composables/indexMantProductos'
@@ -338,7 +337,6 @@ import type { Product } from '../interfaces/createProductos'
 // Usar los composables
 const {
   productos,
-  loading,
   error,
   fetchProductos,
   paginationData,
@@ -348,17 +346,34 @@ const {
 } = useProductos()
 const { createProductos, creating } = useCreateProductos()
 
+// Definir filtros antes del watcher
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+})
+
 onMounted(() => {
   fetchProductos()
 })
 
+// Watcher para el filtro de búsqueda
+watch(
+  () => filters.value.global.value,
+  (newValue) => {
+    // Resetear a la primera página cuando se busca
+    const filtroValue = newValue as string | null
+    fetchProductos(1, itemsPerPage.value, filtroValue || undefined)
+  },
+)
+
 // Manejar cambio de página
 const onPageChange = (event: { page: number; rows: number }) => {
   const newPage = event.page + 1 // PrimeVue usa índice 0, la API usa índice 1
+  const filtroActual = filters.value.global.value as string | null
+
   if (event.rows !== itemsPerPage.value) {
-    changeItemsPerPage(event.rows)
+    changeItemsPerPage(event.rows, filtroActual || undefined)
   } else {
-    goToPage(newPage)
+    goToPage(newPage, filtroActual || undefined)
   }
 }
 
@@ -370,9 +385,6 @@ const deleteProductDialog = ref(false)
 const deleteProductsDialog = ref(false)
 const product = ref<Product>({})
 const selectedProducts = ref()
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-})
 const submitted = ref(false)
 const selectedFiles = ref<File[]>([])
 const documentNames = ref<string[]>([])
