@@ -1,9 +1,8 @@
 <template>
   <div>
-    <!-- Navbar general -->
-    <NavBar title="Gestión de productos" />
-
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Navbar general con contenido como slot -->
+    <NavBar title="Gestión de productos">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div class="card">
         <DataTable
           ref="dt"
@@ -307,6 +306,7 @@
 
     <!-- Toast para notificaciones -->
     <Toast />
+    </NavBar>
   </div>
 </template>
 

@@ -34,12 +34,7 @@
       <!-- Contenido del sidebar -->
       <div class="relative z-10 p-4 h-full">
         <!-- Header del sidebar -->
-        <div class="flex items-center justify-between mb-6">
-          <!-- Botón cerrar solo en móvil -->
-          <button @click="$emit('close')" class="text-white hover:text-gray-300 lg:hidden">
-            <i class="pi pi-times text-xl"></i>
-          </button>
-        </div>
+        <div class="flex items-center justify-between mb-6"></div>
 
         <!-- Enlaces de navegación -->
         <ul class="space-y-3 pt-6">
@@ -93,6 +88,7 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({ name: 'CentralSidebar' })
 import backgroundImage from '@/assets/img/image-central-login.jpg'
 
 interface Props {
