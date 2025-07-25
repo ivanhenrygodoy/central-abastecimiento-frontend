@@ -16,29 +16,38 @@
     <nav class="bg-white shadow-sm border-b border-gray-200 fixed w-full top-0 z-[50]">
       <div class="mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
+          <!-- Espaciador izquierdo para el botón hamburguesa -->
+          <div class="w-12 flex-shrink-0"></div>
+
           <!-- Logo/Título centrado -->
-          <div class="flex-1 flex justify-center">
-            <h1 class="text-xl font-semibold text-gray-900">{{ title || 'Sistema de Gestión' }}</h1>
+          <div class="flex-1 flex justify-center min-w-0">
+            <h1
+              class="text-sm sm:text-lg lg:text-xl font-semibold text-gray-900 truncate px-2 text-center"
+            >
+              {{ title || 'Sistema de Gestión' }}
+            </h1>
           </div>
 
           <!-- Botones derecha -->
-          <div class="flex items-center space-x-3">
-            <!-- Botón Perfil -->
+          <div class="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+            <!-- Botón Perfil - Solo icono en móvil, con texto en desktop -->
             <Button
-              label="Perfil"
+              :label="''"
               icon="pi pi-user"
               outlined
               @click="handleProfile"
-              class="p-button-sm hidden sm:flex"
+              class="p-button-sm p-2 sm:px-3 text-xs sm:text-sm"
+              title="Perfil"
             />
 
-            <!-- Botón Cerrar Sesión -->
+            <!-- Botón Cerrar Sesión - Solo icono en móvil, con texto en desktop -->
             <Button
-              label="Cerrar Sesión"
+              :label="''"
               icon="pi pi-sign-out"
               severity="danger"
               @click="handleLogout"
-              class="p-button-sm hidden sm:flex"
+              class="p-button-sm p-2 sm:px-3 text-xs sm:text-sm"
+              title="Cerrar Sesión"
             />
           </div>
         </div>
@@ -84,6 +93,9 @@ const closeSidebar = () => {
 }
 
 const handleLogout = async () => {
+  // Cerrar sidebar
+  sidebarVisible.value = false
+
   try {
     await logout()
     // El logout ya maneja la redirección al login
