@@ -1,16 +1,25 @@
 <template>
-        <!-- component -->
-    <div class="bg-gray-100 flex justify-center items-center h-screen">
-        <!-- Left: Image -->
-    <div class="w-1/2 h-screen hidden lg:block">
-    <img src="/src/assets/img/image-central-login.jpg" alt="Placeholder Image" class="object-cover w-full h-full">
+  <!-- component -->
+  <div class="relative min-h-screen flex justify-center items-center">
+    <!-- Background Image -->
+    <div
+      class="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+      :style="{ backgroundImage: `url(${backgroundImage})` }"
+    >
+      <!-- Overlay for better text readability -->
+      <div class="absolute inset-0 bg-black bg-opacity-40"></div>
     </div>
-    <!-- Right: Login Form -->
-    <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
 
-      <RouterView />
-
-
+    <!-- Login Form Container -->
+    <div class="relative z-10 w-full max-w-lg mx-auto p-8">
+      <!-- Login Form Card -->
+      <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl px-10 py-16">
+        <RouterView />
+      </div>
     </div>
-    </div>
+  </div>
 </template>
+
+<script setup lang="ts">
+import backgroundImage from '@/assets/img/image-central-login.jpg'
+</script>
