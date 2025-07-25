@@ -1,74 +1,77 @@
 <template>
-  <h1 class="text-2xl font-bold text-blue-500 mb-11 text-center">Gremial Abastecimiento</h1>
-  <!-- Mostrar error si existe -->
-  <div v-if="error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-    {{ error }}
-  </div>
-  <form @submit.prevent="handleLogin">
-    <!-- Username Input -->
-    <div class="mb-4">
-      <label for="email" class="block text-gray-600">Email</label>
-      <InputText
-        type="text"
-        id="email"
-        name="email"
-        unstyled
-        :class="[
-          'w-full border bg-white border-gray-300 rounded-md py-2 px-3 focus:outline-none',
-          formErrors.email
-            ? 'border-red-500 focus:border-red-500'
-            : 'border-gray-300 focus:border-blue-500',
-          'bg-white text-black',
-        ]"
-        autocomplete="off"
-        v-model="credentials.email"
-      />
-      <p v-if="formErrors.email" class="text-red-600 text-sm mt-1">{{ formErrors.email }}</p>
-    </div>
-    <!-- Password Input -->
-    <div class="mb-11">
-      <label for="password" class="block text-gray-600">Password</label>
-      <InputText
-        type="password"
-        id="password"
-        name="password"
-        unstyled
-        :class="[
-          'w-full border bg-white border-gray-300 rounded-md py-2 px-3 focus:outline-none',
-          formErrors.password
-            ? 'border-red-500 focus:border-red-500'
-            : 'border-gray-300 focus:border-blue-500',
-          'bg-white text-black',
-        ]"
-        autocomplete="off"
-        v-model="credentials.password"
-      />
-      <p v-if="formErrors.password" class="text-red-600 text-sm mt-1">{{ formErrors.password }}</p>
-    </div>
-    <!-- Remember Me Checkbox 
-    <div class="mb-4 flex items-center">
-      <Checkbox id="remember" name="remember" unstyled class="bg-white text-blue-500" />
-      <label for="remember" class="text-gray-600 ml-2">Remember Me</label>
-    </div> -->
-    <!-- Forgot Password Link 
-    <div class="mb-6 text-blue-500">
-      <a href="#" class="hover:underline">Forgot Password?</a>
-    </div> --->
+  <div class="space-y-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Gremial Abastecimiento</h1>
 
-    <!-- Login Button -->
-    <Button
-      label="Login"
-      type="submit"
-      unstyled
-      class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full disabled:opacity-50 disabled:cursor-not-allowed"
-      :disabled="isLoading"
-    />
-    <span v-if="isLoading">Logging in...</span>
-    <!-- <span v-else>Login</span> -->
-  </form>
-  <!-- Sign up  Link -->
-  <div class="mt-6 text-blue-500 text-center">
-    <!-- <RouterLink :to="{ name: 'register' }" class="hover:underline">Sign up Here</RouterLink> -->
+    <!-- Mostrar error si existe -->
+    <div v-if="error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
+      {{ error }}
+    </div>
+
+    <form @submit.prevent="handleLogin" class="space-y-6">
+      <!-- Email Input -->
+      <div>
+        <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+        <InputText
+          type="text"
+          id="email"
+          name="email"
+          unstyled
+          :class="[
+            'w-full border rounded-lg py-3 px-4 focus:outline-none focus:ring-2 transition-all duration-200',
+            formErrors.email
+              ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
+              : 'border-gray-300 focus:border-blue-500 focus:ring-blue-200',
+            'bg-white text-gray-800 placeholder-gray-400',
+          ]"
+          placeholder="Ingresa tu email"
+          autocomplete="email"
+          v-model="credentials.email"
+        />
+        <p v-if="formErrors.email" class="text-red-600 text-sm mt-1">{{ formErrors.email }}</p>
+      </div>
+
+      <!-- Password Input -->
+      <div>
+        <label for="password" class="block text-gray-700 font-medium mb-2 mb-2">Contraseña</label>
+        <InputText
+          type="password"
+          id="password"
+          name="password"
+          unstyled
+          :class="[
+            'w-full border rounded-lg py-3 px-4 focus:outline-none focus:ring-2 transition-all duration-200',
+            formErrors.password
+              ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
+              : 'border-gray-300 focus:border-blue-500 focus:ring-blue-200',
+            'bg-white text-gray-800 placeholder-gray-400',
+          ]"
+          placeholder="Ingresa tu contraseña"
+          autocomplete="current-password"
+          v-model="credentials.password"
+        />
+        <p v-if="formErrors.password" class="text-red-600 text-sm mt-1">
+          {{ formErrors.password }}
+        </p>
+      </div>
+
+      <!-- Login Button -->
+      <Button
+        label="Iniciar Sesión"
+        type="submit"
+        unstyled
+        :class="[
+          'w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-200 transform',
+          isLoading
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-blue-600 hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl',
+        ]"
+        :disabled="isLoading"
+      />
+
+      <div v-if="isLoading" class="text-center mt-2">
+        <span class="text-gray-600 text-sm">Iniciando sesión...</span>
+      </div>
+    </form>
   </div>
 </template>
 
