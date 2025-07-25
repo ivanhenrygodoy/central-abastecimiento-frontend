@@ -13,10 +13,10 @@
     </button>
 
     <!-- Navbar fijo -->
-    <nav 
+    <nav
       :class="[
         'bg-white shadow-sm border-b border-gray-200 fixed top-0 z-[50] transition-all duration-700 ease-in-out',
-        sidebarVisible ? 'lg:left-64 lg:w-[calc(100%-16rem)]' : 'left-0 w-full'
+        sidebarVisible ? 'left-64 w-[calc(100%-16rem)]' : 'left-0 w-full',
       ]"
     >
       <div class="mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,11 +63,8 @@
     <Sidebar :visible="sidebarVisible" @close="closeSidebar" @logout="handleLogout" />
 
     <!-- Contenido con padding-top para compensar el navbar fijo y margen lateral para el sidebar -->
-    <div 
-      :class="[
-        'pt-16 transition-all duration-700 ease-in-out',
-        sidebarVisible ? 'lg:ml-64' : 'ml-0'
-      ]"
+    <div
+      :class="['pt-16 transition-all duration-700 ease-in-out', sidebarVisible ? 'ml-64' : 'ml-0']"
     >
       <slot />
     </div>

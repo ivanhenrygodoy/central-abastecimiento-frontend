@@ -2,19 +2,11 @@
   <!-- Wrapper siempre presente para transiciones -->
   <div
     :class="[
-      'fixed inset-0 z-[55] lg:z-[55] transition-all duration-700 ease-in-out pointer-events-none',
+      'fixed inset-0 z-[55] transition-all duration-700 ease-in-out pointer-events-none',
       visible ? 'opacity-100 pointer-events-auto' : 'opacity-0',
     ]"
     @click="handleOverlayClick"
   >
-    <!-- Overlay de fondo -->
-    <div
-      :class="[
-        'absolute inset-0 bg-black lg:hidden transition-all duration-700 ease-in-out',
-        visible ? 'bg-opacity-50' : 'bg-opacity-0',
-      ]"
-    ></div>
-
     <!-- Sidebar -->
     <div
       :class="[
@@ -110,10 +102,8 @@ const handleOverlayClick = (event: Event) => {
 }
 
 const handleNavigation = () => {
-  // Cerrar sidebar después de navegar en móvil
-  if (window.innerWidth < 1024) {
-    emit('close')
-  }
+  // Cerrar sidebar después de navegar en todas las pantallas
+  emit('close')
 }
 </script>
 
